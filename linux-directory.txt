@@ -1,0 +1,56 @@
+Linux Directories and Their Usage
+
+/ - Root
+This is where all files start from
+Only root user has write privelege here
+
+/bin - User Binaries
+Contains binary executables
+Common commands are located here (ps, ls, ping, etc)
+
+/sbin - System Binaries
+Similar to /bin, but contains commands for System Admins
+(iptables, reboot, fdisk, etc.)
+
+/etc - Configuration Files
+Configuration Files required by all programs are here
+Startup and shutdown shell scripts for individual programs
+
+/dev - Device Files
+Contains files for terminal devices, usb, or any attached device
+
+/proc - Process Information
+Contains information about system process
+A Pseudo Filesystem about running processes and system resources
+
+/var - Variable Files
+Contents of files that are expeced to grow are here
+(emails, print queues, package files, system logs)
+
+/tmp - Temporary Files
+Directory thaet contains temp files created by both system and users
+Deleted when system is rebooted
+
+/usr - User Programs
+Contains binaries, libraries, documentation, and src code for second level programs. Same structure as root, but for second level programs
+
+/home - Home Directories
+Regular directory for users to store personal files
+
+/boot - Boot Loader Files
+Contains boot loader related files
+
+/lib - System Libraries
+Containes library files supported by binaries in /bin and /sbin
+
+/opt - Optional add-on Applications
+Contains add-on apps from individual vendors
+
+/mnt - Mount Directory
+Temp mount directory where sysadmins can mount filesystems
+
+/media - Removable Media Devices
+Temp mount for usb, cd, etc.
+
+/srv - Service Data
+Contains server specific related data

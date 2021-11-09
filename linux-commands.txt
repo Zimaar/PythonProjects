@@ -1,0 +1,26 @@
+A List of Linux Commands
+
+Commands I Know:
+
+ls: List Current Directory Contents
+cd: Change Directory (cd / OR cd .. OR cd xyz)
+mkdir: Make a Directory
+rm: Remove (delete) a directory
+sudo: Administrator Priveleges
+vim: Opens a text editor
+python: Runs python REPL or runs .py file
+javac: Compiles .java file
+java: Runs compiled java file
+clear: Clears terminal
+
+
+Commands I have learned:
+grep: Find text in a file
+pwd: Print Working Directory
+mv: Move a file
+cp: Copy a file
+chmod: Change File Permissions
+apt-get: Package Manageri
+ssh: Remotely connect to another IP
+ps: View Active processes
+
