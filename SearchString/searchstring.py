@@ -1,7 +1,14 @@
 with open("sample.txt",'r') as f:
-    string = "Pakistan"
+    string = input("What country are you looking for? ")
+    string = string.strip().capitalize()
+    count = 0
+
     for line in f:
         line = line.rstrip()
+        count += 1
+
         if string == line:
-            print(line)
+            print("Found " + line + " at line #" + str(count))
             break
+    else:
+        print("Invalid Input")
