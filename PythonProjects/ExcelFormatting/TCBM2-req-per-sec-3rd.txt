@@ -1,0 +1,9 @@
+Running 5m test @ https://example.proxy.com:443/0KiB.bin
+  2 threads and 250 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     3.67ms    4.52ms   1.06s    99.32%
+    Req/Sec    34.61k     5.85k   42.38k    59.58%
+  20663002 requests in 5.00m, 5.93GB read
+  Non-2xx or 3xx responses: 20663002
+Requests/sec:  68872.65
+Transfer/sec:     20.23MB
