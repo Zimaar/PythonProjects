@@ -1,54 +1,143 @@
 import sys
 import datetime
 
-#Instruction menu shown to user
-def instruction():
-    sa = """Usage :-
-    ./todo add "todo item" | Add a New ToDo Item
-    ./todo ls              | Show remaining todos
-    ./todo del NUM         | Delete ToDo Item based on Item ID
-    ./todo done NUMBER     | Complete a ToDo based on Item ID
-    ./todo help            | Show usage
-    ./todo report          | Statistics"""
-        sys.stdout.buffer.write(sa.encode('utf8'))
-
-#method for adding item to txt file
-def addItem(s):
-    f = open('todo.txt', 'a') #opening text files where items are stored
-    f.write(s) #writing item to file
-    f.write("\n") #line space for readability
+#This method uses nec() as a main controller to read and store todo.txt (items on todo list) and done.txt (items completed) in arrays that can be later manipulated
+  
+#This shows the help menu to users
+def help():
+    menu = """Usage :-
+$ ./todo add "todo item"  | Add a new todo
+$ ./todo ls               | Show remaining todos
+$ ./todo del NUMBER       | Delete a todo
+$ ./todo done NUMBER      | Complete a todo
+$ ./todo help             | Show usage
+$ ./todo report           | Statistics"""
+    sys.stdout.buffer.write(menu.encode('utf8'))
+  
+#Adds a new todo item to list  
+def add(s):
+    f = open('todo.txt', 'a') #Opens todo file
+    f.write(s) #Writes item to list
+    f.write("\n") #Adds space between items for readability
     f.close()
     print(f"Added todo: {s} ")
-
-#Printing current todo items
+  
+#Prints current items for users  
 def ls():
-    nec()
-    l = len(d)
-    k = l
+    try:
+  
+        nec() #Opens and retrieves array from main controller
+        l = len(d)
+        k = l
+  
+        for i in d: #Prints all items based items added to  array in nec()
+            sys.stdout.buffer.write(f"[{l}] {d[l]}".encode('utf8'))
+            sys.stdout.buffer.write("\n".encode('utf8'))
+            l = l-1
+  
+    except Exception as e:
+        raise e
+  
+#Deletes todo item based on number  
+def deL(no):
+    try:
+        no = int(no) #Casting user input to int
+        nec() #Opens main controller
+        with open("todo.txt", "r+") as f:
+            lines = f.readlines()
+            f.seek(0)
+            for i in lines:
+                if i.strip('\n') != d[no]:
+                    f.write(i) #Method traverses through file and deletes if found
+            f.truncate()
+        print(f"Deleted todo #{no}")
+  
+    except Exception as e:
+        print(f"Error: todo #{no} does not exist. Nothing deleted.")
+  
+#Marks an entered item as completed  
+def done(no): #NO is item ID
+    try:
+  
+        nec() #Opens main controller
+        no = int(no)
+        f = open('done.txt', 'a') #Opens done.txt and adds item/date/time
+        st = 'x '+str(datetime.datetime.today()).split()[0]+' '+d[no]
+        f.write(st) 
+        f.write("\n") #Space for readability
+        f.close()
+        print(f"Marked todo #{no} as done.")
+        
+        #Checks and writes back to todo.txt if item is not done
+        with open("todo.txt", "r+") as f:
+            lines = f.readlines()
+            f.seek(0) 
+            for i in lines:
+                if i.strip('\n') != d[no]:
+                    f.write(i) 
+            f.truncate()
+    except:
+        print(f"Error: todo #{no} does not exist.")
+  
+#Shows time and date of COMPLETED items  
+def report():
+    nec() #Opens controller method
+    try:
+  
+        nf = open('done.txt', 'r') #creates a list of "Done" items
+        c = 1
+        for line in nf:
+            line = line.strip('\n') #strips items for readability
+            don.update({c: line}) #updates array with completed items
+            c = c+1 #C-Counter keeps track of all completed items
+        print(
+            f'{str(datetime.datetime.today()).split()[0]} Pending : {len(d)} Completed : {len(don)}')
+    except:
+        print(
+            f'{str(datetime.datetime.today()).split()[0]} Pending : {len(d)} Completed : {len(don)}')
+  
+#The main function - controls the main todo.txt file  
+def nec():
+    try:
+        f = open('todo.txt', 'r') 
+        c = 1 #c is based on number of lines in the code
+        for line in f:
+            line = line.strip('\n') #Seperating spaces in each line
+            d.update({c: line}) #Updates lines based on C-Counter
+            c = c+1
+    except:
+        sys.stdout.buffer.write("There are no pending todos!".encode('utf8'))
+        #Exception thrown in case of no items
 
-    for i in d:
-        sys.stdout.buffer.write(f"[{l}] {d[l]}".encode('utf8'))
-        sys.stdout.buffer.write("\n".encode('utf8'))
-        l = l-1
-
-def done(num):
-    nec()
-    num = int(num) #converting arguement to int 
-    st = 'x '+str(datetime.datetime.today()).split()[0]
-
-    f.write(st)
-    f.write("\n")
-    f.close()
-    print(f"Marked todo #{num} as done.")
-
-    with open("todo.txt", "r+") as f:
-        lines = f.readlines()
-        f.seek(0)
-
-        for i in lines:
-            if i.strip('\n') != d[no]:
-                f.write(i)
-        f.truncate()
-
-
-    
+#Traverses through array lists for terminal input
+if __name__ == '__main__':
+    try:
+        d = {}
+        don = {}
+        args = sys.argv
+        if(args[1] == 'del'):
+            args[1] = 'deL' #covering for user input mistakes
+        if(args[1] == 'add' and len(args[2:]) == 0):
+            sys.stdout.buffer.write( #exception handling incase user does not enter input
+                "Error: Missing todo string. Nothing added!".encode('utf8'))
+  
+        elif(args[1] == 'done' and len(args[2:]) == 0):
+            sys.stdout.buffer.write(
+                "Error: Missing NUMBER for marking todo as done.".encode('utf8'))
+  
+        elif(args[1] == 'deL' and len(args[2:]) == 0):
+            sys.stdout.buffer.write(
+                "Error: Missing NUMBER for deleting todo.".encode('utf8'))
+        else:
+            globals()[args[1]](*args[2:])
+  
+    except Exception as e:
+  
+        s = """Usage :-
+$ ./todo add "todo item"  # Add a new todo
+$ ./todo ls               # Show remaining todos
+$ ./todo del NUMBER       # Delete a todo
+$ ./todo done NUMBER      # Complete a todo
+$ ./todo help             # Show usage
+$ ./todo report           # Statistics"""
+        sys.stdout.buffer.write(s.encode('utf8'))
